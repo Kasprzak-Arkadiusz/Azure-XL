@@ -2,5 +2,5 @@
 
 public class InfrastructureSettings
 {
-    public string DbConnectionString { get; set; }
+    public string DbConnectionString { get; set; } = null!;
 }
