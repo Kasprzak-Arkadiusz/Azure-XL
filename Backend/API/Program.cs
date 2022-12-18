@@ -1,4 +1,12 @@
+using Infrastructure.Settings;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add configuration
+builder.Services.AddOptions<InfrastructureSettings>().BindConfiguration(nameof(InfrastructureSettings))
+    .ValidateOnStart();
+builder.Services.AddSingleton<IValidateOptions<InfrastructureSettings>, InfrastructureSettingsValidator>();
 
 // Add services to the container.
 
