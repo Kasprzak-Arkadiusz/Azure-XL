@@ -32,30 +32,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-// app.MapControllers();
-
-app.MapGet("/get", (HttpContext httpContext) =>
-    {
-        // return something
-    })
-    .WithName("GetWeatherForecast");
-
-app.MapDelete("/delete", (HttpContext httpContext) =>
-    {
-        //
-    })
-    .WithName("DeleteWeatherForecast");
-
-app.MapPost("/post", (HttpContext httpContext) =>
-    {
-        //
-    })
-    .WithName("PostWeatherForecast");
-
-app.MapPut("/put", (HttpContext httpContext) =>
-    {
-        //
-    })
-    .WithName("PutWeatherForecast");
+app.MapControllers();
 
 app.Run();
