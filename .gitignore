@@ -79,3 +79,10 @@ fabric.properties
 
 # Rider files
 .idea/
+
+# bin and obj folders
+bin/
+obj/
+
+# appsettings for development
+appsettings.Development.json
