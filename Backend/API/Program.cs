@@ -10,6 +10,14 @@ builder.Configuration.Bind(nameof(InfrastructureSettings), infrastructureSetting
 builder.Services.AddInfrastructure(infrastructureSettings);
 
 // Add services to the container.
+const string corsPolicyName = "FrontendPolicy";
+builder.Services.AddCors(o => o.AddPolicy(corsPolicyName, corsPolicyBuilder =>
+{
+    corsPolicyBuilder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,6 +37,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicyName);
 
 app.UseAuthorization();
 
