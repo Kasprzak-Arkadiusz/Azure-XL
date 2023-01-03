@@ -1,0 +1,43 @@
+﻿body {
+    background-image: url("snowflakes.webp");
+}
+
+div.topbar {
+    background-color: #34A65F !important;
+}
+
+h2, h3 {
+    color: #F5624D !important;
+}
+
+.opblock-summary-get > button > span.opblock-summary-method {
+    background-color: #03c0fc !important;
+}
+
+.opblock-summary-post > button > span.opblock-summary-method {
+    background-color: #0F8A5F !important;
+}
+
+.opblock-summary-delete > button > span.opblock-summary-method {
+    background-color: #CC231E !important;
+}
+
+.swagger-ui .opblock.opblock-get {
+    background: rgba(97,175,254,0.4); !important;
+}
+
+.swagger-ui .opblock.opblock-delete {
+    background: rgba(249,62,62,0.4); !important;
+}
+
+.swagger-ui .opblock.opblock-post {
+    background: rgba(73,204,144,0.4); !important;
+}
+
+.swagger-ui .opblock.opblock-put {
+    background: rgba(252,161,48,0.4); !important;
+}
+
+.swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+    font-size: 16px; !important;
+}
