@@ -1,4 +1,5 @@
 using API.Extensions;
+using Application;
 using Infrastructure;
 using Infrastructure.Settings;
 
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 var infrastructureSettings = new InfrastructureSettings();
 builder.Configuration.Bind(nameof(InfrastructureSettings), infrastructureSettings);
 builder.Services.AddInfrastructure(infrastructureSettings);
+
+builder.Services.AddApplication();
 
 // Add services to the container.
 const string corsPolicyName = "FrontendPolicy";
