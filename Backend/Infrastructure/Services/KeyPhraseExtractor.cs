@@ -7,9 +7,9 @@ namespace Infrastructure.Services;
 
 public class KeyPhraseExtractor : IKeyPhraseExtractor
 {
-    private static readonly AzureKeyCredential Credentials = new("replace-with-your-key-here");
-    private static readonly Uri Endpoint = new("replace-with-your-endpoint-here");
-    private const string SplitSeparator = "";
+    private static readonly AzureKeyCredential Credentials = new("INSERT-HERE-YOUR-CREDENTIALS");
+    private static readonly Uri Endpoint = new("INSERT-HERE-YOUR-ENDPOINT");
+    private const string SplitSeparator = " ";
 
     private readonly TextAnalyticsClient _textAnalyticsClient;
 
@@ -26,10 +26,16 @@ public class KeyPhraseExtractor : IKeyPhraseExtractor
             throw new ExternalProviderException("Odpowiedź od Cognitive Service jest nullem");
         }
 
-        return response.HasValue ? SplitKeyPhrases(response.Value.ToList()) : new List<string>();
+        if (!response.HasValue)
+        {
+            return new List<string>();
+        }
+
+        var splitKeyPhrases = SplitKeyPhrases(response.Value.ToList());
+        return  splitKeyPhrases.Select(keyPhrase => keyPhrase.ToLower()).ToList();
     }
 
-    private static List<string> SplitKeyPhrases(IEnumerable<string> keyPhrases)
+    private static IEnumerable<string> SplitKeyPhrases(IEnumerable<string> keyPhrases)
     {
         return keyPhrases.SelectMany(kp => kp.Split(SplitSeparator)).Distinct().ToList();
     }
