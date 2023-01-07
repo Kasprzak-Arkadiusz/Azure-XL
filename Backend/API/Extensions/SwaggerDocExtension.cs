@@ -15,7 +15,7 @@ public static class SwaggerDocExtension
                 {
                     Version = "v1",
                     Title = "Azure-XL",
-                    Description = "An ASP.NET Web API for Azure project related to the search engine",
+                    Description = "An ASP.NET Web API for Azure project related to the search engine"
                 }
             );
 

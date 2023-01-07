@@ -7,15 +7,17 @@ namespace Infrastructure.Services;
 
 public class KeyPhraseExtractor : IKeyPhraseExtractor
 {
-    private static readonly AzureKeyCredential Credentials = new("INSERT-HERE-YOUR-CREDENTIALS");
-    private static readonly Uri Endpoint = new("INSERT-HERE-YOUR-ENDPOINT");
+    private const string EndpointSecretName = "KeyPhraseExtractorEndpoint";
+    private const string KeySecretName = "KeyPhraseExtractorKey";
     private const string SplitSeparator = " ";
 
     private readonly TextAnalyticsClient _textAnalyticsClient;
 
-    public KeyPhraseExtractor()
+    public KeyPhraseExtractor(ISecretSupplier secretSupplier)
     {
-        _textAnalyticsClient = new TextAnalyticsClient(Endpoint, Credentials);
+        var credentials = new AzureKeyCredential(secretSupplier.GetSecret(KeySecretName));
+        var endpoint = new Uri(secretSupplier.GetSecret(EndpointSecretName));
+        _textAnalyticsClient = new TextAnalyticsClient(endpoint, credentials);
     }
 
     public async Task<List<string>> ExtractKeyPhrasesAsync(string text, CancellationToken cancellationToken)
@@ -32,7 +34,7 @@ public class KeyPhraseExtractor : IKeyPhraseExtractor
         }
 
         var splitKeyPhrases = SplitKeyPhrases(response.Value.ToList());
-        return  splitKeyPhrases.Select(keyPhrase => keyPhrase.ToLower()).ToList();
+        return splitKeyPhrases.Select(keyPhrase => keyPhrase.ToLower()).ToList();
     }
 
     private static IEnumerable<string> SplitKeyPhrases(IEnumerable<string> keyPhrases)

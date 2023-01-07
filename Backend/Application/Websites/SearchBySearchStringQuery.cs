@@ -1,20 +1,21 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Websites;
 
-public class SearchBySearchString : IRequest<WebsiteSearchResult>
+public class SearchBySearchStringQuery : IRequest<WebsiteSearchResult>
 {
     public string SearchString { get; init; }
 
-    public SearchBySearchString(string searchString)
+    public SearchBySearchStringQuery(string searchString)
     {
         SearchString = searchString;
     }
 }
 
-public class SearchBySearchStringHandler : IRequestHandler<SearchBySearchString, WebsiteSearchResult>
+public class SearchBySearchStringHandler : IRequestHandler<SearchBySearchStringQuery, WebsiteSearchResult>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly IKeyPhraseExtractor _keyPhraseExtractor;
@@ -25,11 +26,11 @@ public class SearchBySearchStringHandler : IRequestHandler<SearchBySearchString,
         _keyPhraseExtractor = keyPhraseExtractor;
     }
 
-    public async Task<WebsiteSearchResult> Handle(SearchBySearchString query, CancellationToken cancellationToken)
+    public async Task<WebsiteSearchResult> Handle(SearchBySearchStringQuery query, CancellationToken cancellationToken)
     {
         var searchedPhrases = await _keyPhraseExtractor.ExtractKeyPhrasesAsync(query.SearchString, cancellationToken);
 
-        var website = _dbContext.WebsiteKeyPhrases
+        var website = await _dbContext.WebsiteKeyPhrases
             .Include(wkp => wkp.Website)
             .Where(wkp => searchedPhrases.Contains(wkp.KeyPhraseName))
             .GroupBy(wkp => new { wkp.WebsiteUrl, wkp.Website.Title })
@@ -40,8 +41,13 @@ public class SearchBySearchStringHandler : IRequestHandler<SearchBySearchString,
                 Count = wkp.Count()
             })
             .OrderByDescending(w => w.Count)
-            .First();
+            .FirstOrDefaultAsync(cancellationToken);
 
+        if (website is null)
+        {
+            throw new NotFoundException("Nie znaleziono pasujących wyników");
+        }
+        
         return new WebsiteSearchResult
         {
             Url = website.Url,

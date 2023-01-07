@@ -12,6 +12,7 @@ public static class DependencyInjection
     public static void AddInfrastructure(this IServiceCollection services, InfrastructureSettings settings)
     {
         services.AddSingleton(settings);
+        services.AddSingleton<ISecretSupplier, AzureSecretSupplier>();
 
         services.AddTransient<IKeyPhraseExtractor, KeyPhraseExtractor>();
         services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
