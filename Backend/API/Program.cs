@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middlewares;
 using Application;
 using Infrastructure;
 using Infrastructure.Settings;
@@ -22,8 +23,10 @@ builder.Services.AddCors(o => o.AddPolicy(corsPolicyName, corsPolicyBuilder =>
         .AllowAnyHeader();
 }));
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerDocumentation();
@@ -33,11 +36,10 @@ var app = builder.Build();
 app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options => { options.InjectStylesheet("/swagger-ui/style.css"); });
-}
+app.UseSwagger();
+app.UseSwaggerUI(options => { options.InjectStylesheet("/swagger-ui/style.css"); });
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
