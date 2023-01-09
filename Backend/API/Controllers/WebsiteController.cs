@@ -21,4 +21,13 @@ public class WebsiteController : BaseController
         var result = await Mediator.Send(new SearchBySearchStringQuery(searchString));
         return Ok(result);
     }
+
+    
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult> AddKeyPhrasesToWebsites()
+    {
+        await Mediator.Send(new AddKeyPhrasesToWebsitesCommand());
+        return Ok();
+    }
 }

@@ -22,4 +22,9 @@ public class Website
     {
         return new Website(url, title, keyPhrases, image);
     }
+
+    public void SetKeyPhrases(List<WebsiteKeyPhrase> keyPhrases)
+    {
+        WebsiteKeyPhrases = keyPhrases;
+    }
 }
