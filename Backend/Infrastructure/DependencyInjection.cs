@@ -17,7 +17,10 @@ public static class DependencyInjection
         services.AddTransient<IKeyPhraseExtractor, KeyPhraseExtractor>();
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
-            options.UseSqlServer(settings.DbConnectionString)
+            {
+                options.UseSqlServer(settings.DbConnectionString);
+                options.EnableSensitiveDataLogging();
+            }
         );
     }
 }

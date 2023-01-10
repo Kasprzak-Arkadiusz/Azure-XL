@@ -10,15 +10,18 @@ public class Website
 
     private Website() { }
 
-    private Website(string url, string title, IEnumerable<KeyPhrase> keyPhrases, byte[]? image)
+    private Website(string url, string title, IEnumerable<KeyPhrase>? keyPhrases, byte[]? image)
     {
         Url = url;
         Title = title;
-        WebsiteKeyPhrases = keyPhrases.Select(kp => WebsiteKeyPhrase.Create(this, kp)).ToList();
+        WebsiteKeyPhrases = keyPhrases is null
+            ? new List<WebsiteKeyPhrase>()
+            : keyPhrases.Select(kp => WebsiteKeyPhrase.Create(this, kp)).ToList();
         Image = image;
     }
 
-    public static Website Create(string url, string title, IEnumerable<KeyPhrase> keyPhrases, byte[]? image = null)
+    public static Website Create(string url, string title, IEnumerable<KeyPhrase>? keyPhrases = null,
+        byte[]? image = null)
     {
         return new Website(url, title, keyPhrases, image);
     }
