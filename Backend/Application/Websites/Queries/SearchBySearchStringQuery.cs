@@ -3,7 +3,7 @@ using Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Websites;
+namespace Application.Websites.Queries;
 
 public class SearchBySearchStringQuery : IRequest<WebsiteSearchResult>
 {

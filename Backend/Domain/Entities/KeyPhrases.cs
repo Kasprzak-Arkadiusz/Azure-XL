@@ -17,4 +17,14 @@ public class KeyPhrase
     {
         return new KeyPhrase(name);
     }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is KeyPhrase phrase && string.Equals(Name, phrase.Name, StringComparison.CurrentCultureIgnoreCase);
+    }
+
+    public override int GetHashCode()
+    {
+        return Name.GetHashCode();
+    }
 }

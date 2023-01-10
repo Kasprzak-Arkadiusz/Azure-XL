@@ -15,9 +15,12 @@ public static class DependencyInjection
         services.AddSingleton<ISecretSupplier, AzureSecretSupplier>();
 
         services.AddTransient<IKeyPhraseExtractor, KeyPhraseExtractor>();
-        services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
-            options.UseSqlServer(settings.DbConnectionString)
+            {
+                options.UseSqlServer(settings.DbConnectionString);
+                options.EnableSensitiveDataLogging();
+            }
         );
     }
 }

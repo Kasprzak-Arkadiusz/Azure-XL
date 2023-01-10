@@ -1,4 +1,4 @@
-﻿namespace Application.Websites;
+﻿namespace Application.Websites.Queries;
 
 public class WebsiteSearchResult
 {
