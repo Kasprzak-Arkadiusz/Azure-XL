@@ -43,7 +43,7 @@ W skład zespołu projektowego wchodzą:
 
 ## Demo
 
-https://www.youtube.com/watch?v=PaKqKWVUsoU
+https://www.youtube.com/watch?v=Wqzi3TPMhUU
 
 ## Podział obowiązków:
 
