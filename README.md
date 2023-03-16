@@ -1,4 +1,4 @@
-# Wyszukiwanie książek przy pomocy tagów
+# Inteligentne wyszukiwanie stron internetowych
 
 ## Cel projektu
 Celem projektu było stworzenie aplikacji internetowej umożliwiającej wyszukiwanie stron internetowych na bazie wprowadzonej frazy. Wymaganym było, aby oferowała ona funkcję proponowania słów bazując na wprowadzonym przez użytkownika ciągu znaków. Dane spośród, których mają być wyszukiwane strony powinny zostać uzyskane poprzez scrapowanie stron za pomocą napisanego bota. Dodatkową funkcją programu powinno być wyszukiwanie stron za pomocą predefiniowanych kategorii, które pozwolą ograniczyć zbiór zwracanych wyników.
